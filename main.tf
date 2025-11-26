@@ -19,3 +19,7 @@ module "ownership" {
 module "metric_event" {
   source = "./modules/metric_event"
 }
+
+module "checkout_service" {
+  source = "./modules/checkout_service"
+}
