@@ -50,9 +50,9 @@ jobs:
       run: terraform plan -out=tfplan -var="DYNATRACE_ENV_URL=${{ secrets.DYNATRACE_ENV_URL }}" -var="DYNATRACE_API_TOKEN=${{ secrets.DYNATRACE_API_TOKEN }}"
 
     # Apply Terraform changes
-#    - name: Terraform Apply
-#      if: github.ref == 'refs/heads/main'
-#      env:
-#        DYNATRACE_ENV_URL: ${{ secrets.DYNATRACE_ENV_URL }}
-#        DYNATRACE_API_TOKEN: ${{ secrets.DYNATRACE_API_TOKEN }}
-#      run: terraform apply -auto-approve tfplan
+    - name: Terraform Apply
+      if: github.ref == 'refs/heads/main'
+      env:
+        DYNATRACE_ENV_URL: ${{ secrets.DYNATRACE_ENV_URL }}
+        DYNATRACE_API_TOKEN: ${{ secrets.DYNATRACE_API_TOKEN }}
+      run: terraform apply -auto-approve tfplan
