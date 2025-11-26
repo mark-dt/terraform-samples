@@ -4,9 +4,3 @@ module checkout-mz {
     app_id = "123"
     app_name = "Checkout 1"
 }
-
-module checkout-service-ownership {
-    source = "../../templates/ownership"
-    ownership_config_name = "checkout_service"
-    ownership_contact = "checkout_service@email.com"
-}
