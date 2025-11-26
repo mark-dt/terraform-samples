@@ -2,7 +2,7 @@ module checkout-mz {
     source = "../../templates/management_zone"
     app_env = "PRD"
     app_id = "123"
-    app_name = "Checkout"
+    app_name = "Checkout "
 }
 
 module checkout-service-ownership {
