@@ -7,6 +7,6 @@ module checkout-mz {
 
 module checkout-service-ownership {
     source = "../../templates/ownership"
-    ownership_config_name = "checkout_service"
+    ownership_config_name = "checkout_service_2"
     ownership_contact = "checkout_service@email.com"
 }
