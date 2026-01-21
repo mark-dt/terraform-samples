@@ -134,10 +134,10 @@ resource "dynatrace_openpipeline_v2_logs_pipelines" "max-pipeline" {
         }
         enabled = true
       }
-      processor {
+    processor {
         type        = "valueMetric"
         id          = "processor_Warning_timeout_1990"
-        description = "Warning timeout"
+        description = "Neue Metric"
         matcher     = "true"
         value_metric {
           metric_key    = "warning.timeout"
@@ -161,7 +161,7 @@ resource "dynatrace_openpipeline_v2_logs_pipelines" "max-pipeline" {
         }
         enabled = true
       }
-    }
+
     processor {
         type        = "valueMetric"
         id          = "processor_Warning_timeout_1990"
