@@ -1,62 +1,73 @@
-resource "dynatrace_metric_events" "metric_event" {
-  enabled                    = true
-  event_entity_dimension_key = "dt.entity.host"
-  summary                    = var.config_name
+resource "dynatrace_metric_events" "this" {
+  enabled                    = var.enabled
+  summary                    = var.summary
+  event_entity_dimension_key = var.event_entity_dimension_key
+
   event_template {
-    description   = var.event_description
-    davis_merge = false
-    event_type    = "RESOURCE"
-    title         = var.event_title
-  }
-  model_properties {
-    type               = "STATIC_THRESHOLD"
-    alert_condition    = "ABOVE"
-    alert_on_no_data   = false
-    dealerting_samples = 5
-    samples            = 5
-    threshold          = 85
-    violating_samples  = 3
-  }
-  query_definition {
-    type        = "METRIC_KEY"
-    aggregation = "AVG"
-    metric_key  = "builtin:host.disk.usedPct"
-    dimension_filter {
-      filter {
-        dimension_key   = "dt.entity.host"
-        dimension_value = "HOST-9DDF1200A29EFAC9"
-      }
-      filter {
-        dimension_key   = "dt.entity.disk.name"
-        dimension_value = "/local"
-      }
-      filter {
-        dimension_key   = "dt.entity.disk"
-        dimension_value = "DISK-3DC3FC42FBB07595"
+    title       = var.event_template.title
+    description = try(var.event_template.description, null)
+    event_type  = var.event_template.event_type
+    davis_merge = try(var.event_template.davis_merge, false)
+
+    # Provider schema uses "metadata" blocks (Block Set)
+    dynamic "metadata" {
+      for_each = try(var.event_template.metadatas, {})
+      content {
+        metadata_key   = metadata.key
+        metadata_value = metadata.value
       }
     }
-    entity_filter {
-      dimension_key = "dt.entity.host"
-      conditions {
-        condition {
-          type     = "NAME"
-          operator = "EQUALS"
-          value    = "HOST-80FF882B3215BF1A"
+  }
+
+  model_properties {
+    type               = var.model_properties.type
+    alert_condition    = var.model_properties.alert_condition
+    alert_on_no_data   = try(var.model_properties.alert_on_no_data, false)
+    samples            = var.model_properties.samples
+    violating_samples  = var.model_properties.violating_samples
+    dealerting_samples = var.model_properties.dealerting_samples
+    signal_fluctuation = try(var.model_properties.signal_fluctuation, null)
+    threshold          = try(var.model_properties.threshold, null)
+    tolerance          = try(var.model_properties.tolerance, null)
+  }
+
+  query_definition {
+    type            = var.query_definition.type
+    aggregation     = (var.query_definition.type == "METRIC_SELECTOR" ? null : try(var.query_definition.aggregation, null))
+    metric_key      = try(var.query_definition.metric_key, null)
+    metric_selector = try(var.query_definition.metric_selector, null)
+    query_offset    = try(var.query_definition.query_offset, null)
+    management_zone = try(var.query_definition.management_zone, null)
+
+    dynamic "dimension_filter" {
+      for_each = length(try(var.query_definition.dimension_filter, [])) > 0 ? [1] : []
+      content {
+        # Provider schema uses "filter" blocks (Min: 1) inside dimension_filter
+        dynamic "filter" {
+          for_each = try(var.query_definition.dimension_filter, [])
+          content {
+            dimension_key   = filter.value.dimension_key
+            dimension_value = filter.value.dimension_value
+            operator        = filter.value.operator
+          }
         }
-        condition {
-          type     = "ENTITY_ID"
-          operator = "EQUALS"
-          value    = "HOST-32D0DB4904B28FB3"
-        }
-        condition {
-          type     = "MANAGEMENT_ZONE"
-          operator = "EQUALS"
-          value    = "-189204438944455158"
-        }
-        condition {
-          type     = "HOST_GROUP_NAME"
-          operator = "EQUALS"
-          value    = "HOST-42FDD00356069724"
+      }
+    }
+
+    dynamic "entity_filter" {
+      for_each = try(var.query_definition.entity_filter, null) == null ? [] : [var.query_definition.entity_filter]
+      content {
+        dimension_key = entity_filter.value.dimension_key
+        conditions {
+          # Provider schema uses "condition" blocks (Min: 1) inside conditions
+          dynamic "condition" {
+            for_each = entity_filter.value.conditions
+            content {
+              type     = condition.value.type
+              operator = condition.value.operator
+              value    = condition.value.value
+            }
+          }
         }
       }
     }
