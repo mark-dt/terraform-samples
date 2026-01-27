@@ -1,10 +1,3 @@
-module checkout_mz {
-  source = "../../templates/management_zone"
-  app_env = "PRD"
-  app_id = "123"
-  app_name = "Checkout 2"
-}
-
 module availability_slo {
   source = "../../templates/slo_v2"
   name              = "CheckoutService - Availability"
@@ -35,18 +28,14 @@ module metric_event {
     }
   }
 
-  # NOTE: these values are examples. Use Dynatrace UI to pick the correct metric selector,
-  # aggregation and model properties for your case.
   query_definition = {
     type        = "METRIC_SELECTOR"
     aggregation = "AVG"
-    # Typically you'd filter to a specific SERVICE entity dimension; adjust as needed.
     metric_selector = "builtin:service.errors.server.count:splitBy():avg"
     query_offset    = 0
   }
 
   model_properties = {
-    # The type/alert_condition values are provider-specific enumerations; adjust based on what you use in UI/export.
     type               = "STATIC_THRESHOLD"
     alert_condition    = "ABOVE"
     samples            = 5
