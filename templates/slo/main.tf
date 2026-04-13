@@ -3,11 +3,11 @@ resource "dynatrace_slo_v2" "Service_Level_Objective_Terraform_Test" {
   enabled           = true
   evaluation_type   = "AGGREGATE"
   evaluation_window = "-1w"
-  filter            =<<-EOT
+  filter            = <<-EOT
     type("SERVICE"), tag("environment:${var.releaseStage}")
     
   EOT
-  metric_expression =<<-EOT
+  metric_expression = <<-EOT
     ((builtin:service.response.time:avg:partition("latency",value("good",lt(1000))):splitBy():count:default(1))/(builtin:service.response.time:avg:splitBy():count)*(100))
   EOT
   metric_name       = "${var.sloMetricName}_${var.releaseStage}_response_time"

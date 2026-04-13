@@ -3,10 +3,10 @@ resource "dynatrace_metric_events" "metric_event" {
   event_entity_dimension_key = "dt.entity.host"
   summary                    = var.config_name
   event_template {
-    description   = var.event_description
+    description = var.event_description
     davis_merge = false
-    event_type    = "RESOURCE"
-    title         = var.event_title
+    event_type  = "RESOURCE"
+    title       = var.event_title
   }
   model_properties {
     type               = "STATIC_THRESHOLD"

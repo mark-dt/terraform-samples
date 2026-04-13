@@ -18,22 +18,22 @@ resource "dynatrace_web_application" "EasyTrade" {
     tolerated_threshold            = 3000
   }
   monitoring_settings {
-    cache_control_header_optimizations   = true
+    cache_control_header_optimizations = true
     # cookie_placement_domain            = ""
     # correlation_header_inclusion_regex = ""
     # custom_configuration_properties    = ""
     # exclude_xhr_regex                  = ""
-    fetch_requests                       = true
-    injection_mode                       = "JAVASCRIPT_TAG"
+    fetch_requests = true
+    injection_mode = "JAVASCRIPT_TAG"
     # library_file_location              = ""
     # monitoring_data_path               = ""
     # secure_cookie_attribute            = false
     # server_request_path_id             = ""
-    xml_http_request                     = true
+    xml_http_request = true
     advanced_javascript_tag_settings {
       # instrument_unsupported_ajax_frameworks = false
-      max_action_name_length                   = 100
-      max_errors_to_capture                    = 10
+      max_action_name_length = 100
+      max_errors_to_capture  = 10
       # special_characters_to_escape           = ""
       # sync_beacon_firefox                    = false
       # sync_beacon_internet_explorer          = false
@@ -41,32 +41,32 @@ resource "dynatrace_web_application" "EasyTrade" {
         # blur                          = false
         # change                        = false
         # click                         = false
-        max_dom_nodes                   = 5000
+        max_dom_nodes = 5000
         # mouseup                       = false
         # to_string_method              = false
         # use_mouse_up_event_for_clicks = false
       }
       global_event_capture_settings {
         # additional_event_captured_as_user_input = ""
-        change                                    = true
-        click                                     = true
-        doubleclick                               = true
-        keydown                                   = true
-        keyup                                     = true
-        mousedown                                 = true
-        mouseup                                   = true
-        scroll                                    = true
-        touch_end                                 = true
-        touch_start                               = true
+        change      = true
+        click       = true
+        doubleclick = true
+        keydown     = true
+        keyup       = true
+        mousedown   = true
+        mouseup     = true
+        scroll      = true
+        touch_end   = true
+        touch_start = true
       }
     }
     content_capture {
       javascript_errors                 = true
       visually_complete_and_speed_index = true
       resource_timing_settings {
-        instrumentation_delay      = 50
+        instrumentation_delay = 50
         # non_w3c_resource_timings = false
-        w3c_resource_timings       = true
+        w3c_resource_timings = true
       }
       timeout_settings {
         temporary_action_limit         = 0
@@ -76,9 +76,9 @@ resource "dynatrace_web_application" "EasyTrade" {
       visually_complete_settings {
         # exclude_url_regex      = ""
         # ignored_mutations_list = ""
-        inactivity_timeout       = 1000
-        mutation_timeout         = 50
-        threshold                = 50
+        inactivity_timeout = 1000
+        mutation_timeout   = 50
+        threshold          = 50
       }
     }
     javascript_framework_support {
@@ -98,9 +98,9 @@ resource "dynatrace_web_application" "EasyTrade" {
     enable_css_resource_capturing = true
   }
   user_action_naming_settings {
-    ignore_case                      = true
-    query_parameter_cleanups         = [ "cfid", "phpsessid", "__sid", "cftoken", "sid" ]
-    split_user_actions_by_domain     = true
+    ignore_case                  = true
+    query_parameter_cleanups     = ["cfid", "phpsessid", "__sid", "cftoken", "sid"]
+    split_user_actions_by_domain = true
     # use_first_detected_load_action = false
   }
   waterfall_settings {
