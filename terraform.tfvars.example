@@ -1,0 +1,14 @@
+enable_cost_allocation = true
+
+dynatrace_account_uuid        = ""
+dynatrace_oauth_client_id     = ""
+dynatrace_oauth_client_secret = ""
+dynatrace_api_base            = "https://api.dynatrace.com"
+
+cost_centers = [
+  "engineering",
+]
+
+cost_products = [
+  "payments-api",
+]
