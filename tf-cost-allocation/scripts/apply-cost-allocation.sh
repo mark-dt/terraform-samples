@@ -1,9 +1,15 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+if [[ "$DT_API_BASE" == *"hardening"* ]]; then
+  SSO_URL="https://sso-sprint.dynatracelabs.com/sso/oauth2/token"
+else
+  SSO_URL="https://sso.dynatrace.com/sso/oauth2/token"
+fi
+
 TOKEN_BODY=$(mktemp)
 TOKEN_STATUS=$(curl -sS --output "$TOKEN_BODY" --write-out "%{http_code}" --request POST \
-  --url "https://sso-sprint.dynatracelabs.com/sso/oauth2/token" \
+  --url "$SSO_URL" \
   --header "Content-Type: application/x-www-form-urlencoded" \
   --data-urlencode "grant_type=client_credentials" \
   --data-urlencode "client_id=$DT_CLIENT_ID" \
