@@ -134,10 +134,38 @@ resource "dynatrace_openpipeline_v2_logs_pipelines" "max-pipeline" {
         }
         enabled = true
       }
-      processor {
+    processor {
         type        = "valueMetric"
         id          = "processor_Warning_timeout_1990"
-        description = "Warning timeout"
+        description = "Neue Metric"
+        matcher     = "true"
+        value_metric {
+          metric_key    = "warning.timeout"
+          field         = "recording.timeout_in_min"
+          default_value = 60
+          dimensions {
+            dimension {
+              source_field_name = "dt.cost.costcenter"
+            }
+            dimension {
+              source_field_name = "dt.cost.product"
+            }
+            dimension {
+              source_field_name = "dt.security_context"
+            }
+            dimension {
+              source_field_name      = "record.category"
+              destination_field_name = "warning_category"
+            }
+          }
+        }
+        enabled = true
+      }
+
+    processor {
+        type        = "valueMetric"
+        id          = "processor_Warning_timeout_1990"
+        description = "Neue Metric"
         matcher     = "true"
         value_metric {
           metric_key    = "warning.timeout"
