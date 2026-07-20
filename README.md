@@ -17,6 +17,10 @@ cost_products                 = ["checkout", "mobile-app"]
 
 The integration uses the Dynatrace account API at `dynatrace_api_base` and requires OAuth credentials that can request the `account-uac-write` scope.
 
+## OpenPipeline pipeline grouping
+
+[`examples/openpipeline-grouping`](./examples/openpipeline-grouping) contains a standalone sample that creates per-team OpenPipeline log pipelines (stamping the cost center and product keys defined above), wraps them in a pipeline group, and routes logs to them by Kubernetes namespace. See its README for usage.
+
 ## Prerequisites
 
 - [Terraform](https://developer.hashicorp.com/terraform/downloads) >= 1.0
