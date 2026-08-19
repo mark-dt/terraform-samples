@@ -1,0 +1,45 @@
+{
+  "version": 21,
+  "variables": [],
+  "tiles": {
+    "0": {
+      "type": "markdown",
+      "content": "# Host CPU overview\n\nManaged by Terraform. Edits made in the UI are overwritten on the next `terraform apply`."
+    },
+    "1": {
+      "type": "data",
+      "title": "CPU usage per host",
+      "query": "timeseries avg(dt.host.cpu.usage), by:{dt.entity.host}",
+      "visualization": "lineChart",
+      "visualizationSettings": {
+        "chartSettings": {
+          "legend": {
+            "position": "bottom"
+          }
+        }
+      }
+    },
+    "2": {
+      "type": "data",
+      "title": "Average CPU usage",
+      "query": "timeseries usage = avg(dt.host.cpu.usage)\n| fieldsAdd avgUsage = arrayAvg(usage)\n| fields avgUsage",
+      "visualization": "singleValue",
+      "visualizationSettings": {
+        "unitsOverrides": [
+          {
+            "identifier": "avgUsage",
+            "unitCategory": "percentage",
+            "baseUnit": "percent",
+            "displayUnit": null,
+            "decimals": 1
+          }
+        ]
+      }
+    }
+  },
+  "layouts": {
+    "0": { "x": 0, "y": 0, "w": 24, "h": 2 },
+    "1": { "x": 0, "y": 2, "w": 16, "h": 8 },
+    "2": { "x": 16, "y": 2, "w": 8, "h": 8 }
+  }
+}
